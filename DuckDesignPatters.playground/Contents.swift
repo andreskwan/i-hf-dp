@@ -12,7 +12,7 @@ class Quack: QuackBehavior {
 
 class MuteQuack: QuackBehavior {
     func quak() {
-        print("<< Silence >>")
+        print("<< Silence, can't make a sound >>")
     }
 }
 
@@ -54,6 +54,10 @@ class Duck {
 class MallarDuck: Duck {
     override init() {
         super.init()
+        //Programming to an implementation - what should be avoided. 
+        //this hardcode assignation also should be avoided
+        //this behaviors should be flexible, could be asigned at runtime.
+        //example: sefl.flyBehavior = getFlyingBehavior()
         self.flyBehavior = FlyWithWings()
         self.quackBehavior = MuteQuack()
     }
