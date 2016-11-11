@@ -39,8 +39,16 @@ class FlyNoWay:FlyBehavior {
 }
 
 class Duck {
-    var flyBehavior: FlyBehavior!
-    var quackBehavior: QuackBehavior!
+    var flyBehavior: FlyBehavior? {
+        didSet {
+            if let flyBehavior = flyBehavior {
+                print("flyBehavior is set to: \(type(of:flyBehavior))")
+            } else {
+                print("flyBehavior is nil")
+            }
+        }
+    }
+    var quackBehavior: QuackBehavior?
     
     func performFly() -> Void {
         flyBehavior?.fly()
@@ -54,10 +62,12 @@ class Duck {
 class MallarDuck: Duck {
     override init() {
         super.init()
-        //Programming to an implementation - what should be avoided. 
+        //Programming to an implementation - what should be avoided.
         //this hardcode assignation also should be avoided
         //this behaviors should be flexible, could be asigned at runtime.
         //example: sefl.flyBehavior = getFlyingBehavior()
+        //In swift already do this 
+        //because flyBehavior = is already setFlyBehavior() is not needed
         self.flyBehavior = FlyWithWings()
         self.quackBehavior = MuteQuack()
     }
@@ -73,3 +83,8 @@ class MiniDuckSimulator {
 
 let miniDuck = MiniDuckSimulator()
 
+class ModelDuck: Duck {
+    override init () {
+        
+    }
+}
