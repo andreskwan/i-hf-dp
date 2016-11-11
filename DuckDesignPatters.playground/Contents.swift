@@ -38,6 +38,12 @@ class FlyNoWay:FlyBehavior {
     }
 }
 
+class FlyRocketPower: FlyBehavior {
+    func fly() {
+        print("I'm flying with a rocket!")
+    }
+}
+
 class Duck {
     var flyBehavior: FlyBehavior? {
         didSet {
@@ -73,18 +79,36 @@ class MallarDuck: Duck {
     }
 }
 
+class ModelDuck: Duck {
+    override init () {
+        super.init()
+        self.flyBehavior = FlyNoWay()
+        self.quackBehavior = Quack()
+    }
+    
+    func display() -> Void {
+        print("I'm a model duck")
+    }
+}
+
 class MiniDuckSimulator {
     init() {
         let mallard: Duck = MallarDuck()
+        // first call to performFly delegates the flyBehavior object set in the ModelDuck's constructor
         mallard.performFly()
         mallard.performQuack()
+        
+        let model: Duck = ModelDuck()
+        model.performFly()
+        // the model duck dynamically changed its flying behavior! 
+        // can't be done if the implementation lives inside the duck class
+        // - invokes the model's inherited bahavior setter method, now it can fly!
+        model.flyBehavior = FlyRocketPower()
+        model.performFly()
     }
 }
 
 let miniDuck = MiniDuckSimulator()
 
-class ModelDuck: Duck {
-    override init () {
-        
-    }
-}
+
+
